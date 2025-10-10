@@ -15,11 +15,11 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.aistra.hail"
+        applicationId = "id.hadi_lesmana.hail_extended"
         minSdk = 23
         targetSdk = 35
-        versionCode = 33
-        versionName = "1.9.0"
+        versionCode = 33001
+        versionName = "1.9.1-extended"
     }
 
     buildTypes {
@@ -48,7 +48,7 @@ android {
     applicationVariants.configureEach {
         outputs.configureEach {
             (this as? com.android.build.gradle.internal.api.ApkVariantOutputImpl)?.outputFileName =
-                "Hail-v$versionName.apk"
+                "HailExtended-v$versionName.apk"
         }
     }
     java {
