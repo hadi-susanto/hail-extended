@@ -12,11 +12,11 @@ android {
     }.standardOutput.asText.get().trim()
 
     namespace = "com.aistra.hail"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "id.hadi_lesmana.hail_extended"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 35
         versionCode = 33001
         versionName = "1.9.1-extended"

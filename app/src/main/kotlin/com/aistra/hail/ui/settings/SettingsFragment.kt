@@ -424,9 +424,9 @@ class SettingsFragment : MainFragment(), MenuProvider {
         when {
             mode.startsWith(HailData.OWNER) -> if (!HPolicy.isDeviceOwnerActive) {
                 MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.title_set_owner)
-                    .setMessage(getString(R.string.msg_set_owner, HPolicy.ADB_COMMAND))
+                    .setMessage(getString(R.string.msg_set_owner, HPolicy.DPM_COMMAND))
                     .setPositiveButton(android.R.string.ok, null)
-                    .setNeutralButton(android.R.string.copy) { _, _ -> HUI.copyText(HPolicy.ADB_COMMAND) }.show()
+                    .setNeutralButton(android.R.string.copy) { _, _ -> HUI.copyText(HPolicy.DPM_COMMAND) }.show()
                     .findViewById<MaterialTextView>(android.R.id.message)?.setTextIsSelectable(true)
                 return false
             }

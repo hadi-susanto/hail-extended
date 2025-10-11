@@ -11,13 +11,12 @@ import com.aistra.hail.receiver.DeviceAdminReceiver
 object HPolicy {
     private val dpm = app.getSystemService<DevicePolicyManager>()!!
     private val admin = ComponentName(app, DeviceAdminReceiver::class.java)
-    private val DPM_COMMAND = "dpm set-device-owner ${admin.flattenToShortString()}"
-    val ADB_COMMAND = "adb shell $DPM_COMMAND"
+    val DPM_COMMAND = "Device Owner: dpm set-device-owner ${admin.flattenToShortString()}\nProfile Owner: dpt set-profile-owner ${admin.flattenToShortString()}"
 
     private val isDeviceOwner get() = dpm.isDeviceOwnerApp(app.packageName)
     val isProfileOwner get() = dpm.isProfileOwnerApp(app.packageName)
     val isAdminActive get() = dpm.isAdminActive(admin)
-    val isDeviceOwnerActive get() = isDeviceOwner && isAdminActive
+    val isDeviceOwnerActive get() = (isProfileOwner || isDeviceOwner) && isAdminActive
 
     val lockScreen get() = isAdminActive.also { if (it) dpm.lockNow() }
 
