@@ -43,6 +43,7 @@
     <string name="action_uninstall">Uninstall</string>
     <string name="msg_uninstall">Do you want to uninstall this app?</string>
     <string name="working_mode">Working mode</string>
+    <string name="working_mode_tag">Working mode of related apps</string>
     <string name="mode_default">Idle</string>
     <string name="mode_owner_hide">Device Owner - Hide</string>
     <string name="mode_owner_suspend">Device Owner - Suspend</string>
@@ -74,10 +75,7 @@
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
     <string name="donate_wechat_scan">Scan</string>
-    <string name="donate_bilibili">Bilibili</string>
-    <string name="donate_bilibili_msg">Follow me on Bilibili.</string>
-    <string name="donate_bilibili_space">Bilibili space</string>
-    <string name="donate_bilibili_cancel">Cancel</string>
+    <string name="donate_kofi">Ko-fi</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="permission_denied">Permission denied</string>
@@ -101,7 +99,7 @@
         <item quantity="other">%2$s after %1$d minutes: %3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcuts">Clear all dynamic shortcuts</string>
-    <string name="tile_action">Tile action</string>
+    <string name="tile_action">Quick setting tile action</string>
     <string name="auto_freeze">Auto freeze</string>
     <string name="auto_freeze_notification_title">Auto freeze service is running</string>
     <string name="auto_freeze_after_lock">After screen locked</string>
@@ -138,7 +136,7 @@
     <string name="mode_su_hide">Root - Hide</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="action_skip">Skip</string>
-    <string name="xposed_description">Automatically unfreeze suspended app for scoped apps</string>
+    <string name="xposed_description">Allow scoped apps to launch suspended apps</string>
     <string name="mode_island_hide">Island/Insular - Hide</string>
     <string name="mode_island_suspend">Island/Insular - Suspend</string>
     <string name="shizuku_hide_adb">Shizuku is running as adb. To hide apps, please restart Shizuku with root.</string>
@@ -154,4 +152,9 @@
     <string name="follow_system">Follow system</string>
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
+    <string name="state_running">Running</string>
+    <string name="state_disabled">Disabled</string>
+    <string name="state_hidden">Hidden</string>
+    <string name="state_suspended">Suspended</string>
+    <string name="state_uninstalled">Uninstalled</string>
 </resources>

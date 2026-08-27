@@ -65,13 +65,9 @@
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
     <string name="donate_wechat_scan">Scansiona</string>
-    <string name="donate_bilibili">bilibili</string>
-    <string name="donate_bilibili_msg">Follow me on bilibili.</string>
-    <string name="donate_bilibili_space">My space</string>
-    <string name="donate_bilibili_cancel">@android:string/cancel</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
-    <string name="permission_denied">Permissione rifiutata</string>
+    <string name="permission_denied">Permesso negato</string>
     <string name="app_not_installed">App non installata</string>
     <string name="activity_not_found">Attività da lanciare non trovata</string>
     <string name="shizuku_missing">Shizuku mancante :(</string>
@@ -94,7 +90,7 @@
         <item quantity="other">%2$s dopo %1$d minuti: %3$s</item>
     </plurals>
     <string name="action_clear_dynamic_shortcuts">Cancella tutti i collegamenti dinamici</string>
-    <string name="tile_action">Azione della tessera</string>
+    <string name="tile_action">Azione della tessera rapida</string>
     <string name="auto_freeze">Congela automaticamente</string>
     <string name="auto_freeze_notification_title">Il servizio di congelazione automatica è avviato</string>
     <string name="auto_freeze_after_lock">Dopo blocco schermo</string>
@@ -156,4 +152,5 @@
     <string name="follow_system">Segui il sistema</string>
     <string name="theme_light">Chiaro</string>
     <string name="theme_dark">Scuro</string>
+    <string name="xposed_description">Scongela automaticamente le app sospese (per le app selezionate)</string>
 </resources>

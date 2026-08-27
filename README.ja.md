@@ -1,4 +1,4 @@
-[简体中文](README.md) | [English](README_EN.md) | 日本語
+[English](README.md) | [简体中文](README.zh_CN.md) | 日本語
 
 # 雹 Hail
 
@@ -227,8 +227,8 @@ or use following `schema`:
 ## ライセンス
 
     Hail - Freeze Android apps
-    Copyright (C) 2021-2025 Aistra
-    Copyright (C) 2022-2025 Hail contributors
+    Copyright (C) 2021-2026 Aistra
+    Copyright (C) 2022-2026 Hail contributors
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

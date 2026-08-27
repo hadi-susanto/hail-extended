@@ -1,5 +1,6 @@
 package com.aistra.hail.app
 
+import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.aistra.hail.BuildConfig
 import com.aistra.hail.HailApp.Companion.app
@@ -18,13 +19,14 @@ object HailData {
     const val URL_FDROID = "https://f-droid.org/packages/${BuildConfig.APPLICATION_ID}"
     const val URL_ALIPAY = "https://qr.alipay.com/tsx02922ajwj6xekqyd1rbf"
     const val URL_ALIPAY_API = "alipays://platformapi/startapp?saId=10000007&qrcode=$URL_ALIPAY"
-    const val URL_BILIBILI = "https://space.bilibili.com/9261272"
+    const val URL_KOFI = "https://ko-fi.com/aistra0528"
     const val URL_LIBERAPAY = "https://liberapay.com/aistra0528"
     const val URL_PAYPAL = "https://www.paypal.me/aistra0528"
     const val URL_TRANSLATE = "https://hosted.weblate.org/engage/hail/"
     const val VERSION = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
     private const val KEY_ID = "id"
     const val KEY_TAG = "tag"
+    private const val KEY_TAGS = "tags"
     private const val KEY_PINNED = "pinned"
     private const val KEY_WHITELISTED = "whitelisted"
     const val KEY_PACKAGE = "package"
@@ -105,7 +107,14 @@ object HailData {
     const val ACTION_LOCK = "lock"
     const val ACTION_LOCK_FREEZE = "lock_freeze"
     val TILE_ACTION_VALUES =
-        listOf(ACTION_FREEZE_ALL, ACTION_UNFREEZE_ALL, ACTION_FREEZE_NON_WHITELISTED, ACTION_LOCK, ACTION_LOCK_FREEZE)
+        listOf(
+            AUTO_FREEZE_AFTER_LOCK,
+            ACTION_FREEZE_ALL,
+            ACTION_UNFREEZE_ALL,
+            ACTION_FREEZE_NON_WHITELISTED,
+            ACTION_LOCK,
+            ACTION_LOCK_FREEZE
+        )
     const val AUTO_FREEZE_AFTER_LOCK = "auto_freeze_after_lock"
     const val AUTO_FREEZE_DELAY = "auto_freeze_delay_f"
     const val SKIP_WHILE_CHARGING = "skip_while_charging"
@@ -137,8 +146,10 @@ object HailData {
     val homeFontSize get() = sp.getFloat(HOME_FONT_SIZE, 14f)
     val fuzzySearch get() = sp.getBoolean(FUZZY_SEARCH, false)
     val nineKeySearch get() = sp.getBoolean(NINE_KEY_SEARCH, false)
-    val tileAction get() = sp.getString(TILE_ACTION, ACTION_FREEZE_ALL)
-    val autoFreezeAfterLock get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
+    val tileAction get() = sp.getString(TILE_ACTION, AUTO_FREEZE_AFTER_LOCK)!!
+    var autoFreezeAfterLock
+        get() = sp.getBoolean(AUTO_FREEZE_AFTER_LOCK, false)
+        set(value) = sp.edit { putBoolean(AUTO_FREEZE_AFTER_LOCK, value) }
     val autoFreezeDelay get() = sp.getFloat(AUTO_FREEZE_DELAY, 0f).toLong()
     val skipWhileCharging get() = sp.getBoolean(SKIP_WHILE_CHARGING, false)
     val skipForegroundApp get() = sp.getBoolean(SKIP_FOREGROUND_APP, false)
@@ -156,7 +167,12 @@ object HailData {
                 for (i in 0 until json.length()) {
                     add(with(json.getJSONObject(i)) {
                         AppInfo(
-                            getString(KEY_PACKAGE), optBoolean(KEY_PINNED), optInt(KEY_TAG), optBoolean(KEY_WHITELISTED)
+                            packageName = getString(KEY_PACKAGE),
+                            pinned = optBoolean(KEY_PINNED),
+                            whitelisted = optBoolean(KEY_WHITELISTED),
+                            tagIdList = optJSONArray(KEY_TAGS)?.let {
+                                MutableList(it.length()) { index -> it.getInt(index) }
+                            } ?: mutableListOf(optInt(KEY_TAG))
                         )
                     })
                 }
@@ -166,8 +182,8 @@ object HailData {
 
     fun isChecked(packageName: String): Boolean = checkedList.any { it.packageName == packageName }
 
-    fun addCheckedApp(packageName: String, saveApps: Boolean = true, tagId: Int = 0) {
-        checkedList.add(AppInfo(packageName, false, tagId, false))
+    fun addCheckedApp(packageName: String, tagId: Int = 0, saveApps: Boolean = true) {
+        checkedList.add(AppInfo(packageName, tagIdList = mutableListOf(tagId)))
         if (saveApps) saveApps()
     }
 
@@ -181,8 +197,11 @@ object HailData {
         HFiles.write(appsPath, JSONArray().run {
             checkedList.forEach {
                 put(
-                    JSONObject().put(KEY_PACKAGE, it.packageName).put(KEY_PINNED, it.pinned).put(KEY_TAG, it.tagId)
+                    JSONObject()
+                        .put(KEY_PACKAGE, it.packageName)
+                        .put(KEY_PINNED, it.pinned)
                         .put(KEY_WHITELISTED, it.whitelisted)
+                        .put(KEY_TAGS, JSONArray(it.tagIdList))
                 )
             }
             toString()
@@ -212,7 +231,7 @@ object HailData {
         })
     }
 
-    fun changeAppsSort(sort: String) = sp.edit().putString(SORT_BY, sort).apply()
+    fun changeAppsSort(sort: String) = sp.edit { putString(SORT_BY, sort) }
 
-    fun changeAppsFilter(filter: String, enabled: Boolean) = sp.edit().putBoolean(filter, enabled).apply()
+    fun changeAppsFilter(filter: String, enabled: Boolean) = sp.edit { putBoolean(filter, enabled) }
 }

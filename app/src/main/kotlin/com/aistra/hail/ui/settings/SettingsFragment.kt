@@ -85,11 +85,16 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 values = HailData.WORKING_MODE_VALUES,
                 entriesId = R.array.working_mode_entries,
                 titleId = R.string.working_mode,
-                icon = Icons.Outlined.Adb
+                icon = Icons.Outlined.Adb,
+                type = ListPreferenceType.ALERT_DIALOG
             )
             switchPreference(
                 key = HailData.BIOMETRIC_LOGIN,
                 defaultValue = false,
+                onValueChange = { _, value ->
+                    if (value) resetDynamicShortcuts()
+                    true
+                },
                 titleId = R.string.action_biometric,
                 icon = Icons.Outlined.Fingerprint
             )
@@ -110,7 +115,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
             listPreference(
                 key = HailData.ICON_PACK,
                 defaultValue = HailData.ACTION_NONE,
-                onValueChange = { _, value ->
+                onValueChange = { _, _ ->
                     AppIconCache.clear()
                     true
                 },
@@ -167,7 +172,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
             )
             listPreference(
                 key = HailData.TILE_ACTION,
-                defaultValue = HailData.ACTION_FREEZE_ALL,
+                defaultValue = HailData.tileAction,
                 values = HailData.TILE_ACTION_VALUES,
                 entriesId = R.array.tile_action_entries,
                 titleId = R.string.tile_action,
@@ -254,10 +259,9 @@ class SettingsFragment : MainFragment(), MenuProvider {
             preference(
                 key = "clear_dynamic_shortcuts",
                 title = { Text(text = stringResource(R.string.action_clear_dynamic_shortcuts)) },
-                icon = { Icon(imageVector = Icons.Outlined.CleaningServices, contentDescription = null) }) {
-                HShortcuts.removeAllDynamicShortcuts()
-                HShortcuts.addDynamicShortcutAction(HailData.dynamicShortcutAction)
-            }
+                icon = { Icon(imageVector = Icons.Outlined.CleaningServices, contentDescription = null) },
+                onClick = ::resetDynamicShortcuts
+            )
         }
     }
 
@@ -265,7 +269,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
 
     private fun LazyListScope.switchPreference(
         rememberState: @Composable () -> MutableState<Boolean>,
-        onValueChange: (MutableState<Boolean>, Boolean) -> Boolean = { rememberState, value -> true },
+        onValueChange: (MutableState<Boolean>, Boolean) -> Boolean = { _, _ -> true },
         @StringRes titleId: Int,
         enabled: Boolean = true,
         icon: ImageVector,
@@ -282,7 +286,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
     private fun LazyListScope.switchPreference(
         key: String,
         defaultValue: Boolean,
-        onValueChange: (MutableState<Boolean>, Boolean) -> Boolean = { rememberState, value -> true },
+        onValueChange: (MutableState<Boolean>, Boolean) -> Boolean = { _, _ -> true },
         @StringRes titleId: Int,
         enabled: Boolean = true,
         icon: ImageVector,
@@ -297,7 +301,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
     private fun LazyListScope.listPreference(
         key: String,
         defaultValue: String,
-        onValueChange: (MutableState<String>, String) -> Boolean = { rememberState, value -> true },
+        onValueChange: (MutableState<String>, String) -> Boolean = { _, _ -> true },
         values: List<String>,
         @StringRes titleId: Int,
         icon: ImageVector,
@@ -320,7 +324,7 @@ class SettingsFragment : MainFragment(), MenuProvider {
     private fun LazyListScope.listPreference(
         key: String,
         defaultValue: String,
-        onValueChange: (MutableState<String>, String) -> Boolean = { rememberState, value -> true },
+        onValueChange: (MutableState<String>, String) -> Boolean = { _, _ -> true },
         values: List<String>,
         @ArrayRes entriesId: Int,
         @StringRes titleId: Int,
@@ -339,6 +343,11 @@ class SettingsFragment : MainFragment(), MenuProvider {
 
     private fun String.toEntry(values: List<String>, @ArrayRes entriesId: Int): String =
         resources.getStringArray(entriesId)[values.indexOf(this)]
+
+    private fun resetDynamicShortcuts() {
+        HShortcuts.removeAllDynamicShortcuts()
+        HShortcuts.addDynamicShortcutAction(HailData.dynamicShortcutAction)
+    }
 
     private fun iconPackName(pack: String): String = if (pack == HailData.ACTION_NONE) getString(R.string.action_none)
     else HPackages.getApplicationInfoOrNull(pack)?.loadLabel(app.packageManager)?.toString() ?: pack

@@ -52,10 +52,6 @@
     <string name="auto_freeze_notification_title">Запущено службу автозаморожування</string>
     <string name="compact_icon">Компактні іконки</string>
     <string name="donate_alipay">Alipay</string>
-    <string name="donate_bilibili">Bilibili</string>
-    <string name="donate_bilibili_cancel">Скасувати</string>
-    <string name="donate_bilibili_msg">Підпишіться на мій Bilibili.</string>
-    <string name="donate_bilibili_space">Простір Bilibili</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="donate_paypal">PayPal</string>
     <string name="donate_wechat">WeChat Pay</string>
@@ -103,7 +99,7 @@
     <string name="sort_update">Останнє оновлення</string>
     <string name="synthesize_adaptive_icons">Створити адаптивні іконки</string>
     <string name="tap_to_select">Натисніть, щоб вибрати кілька</string>
-    <string name="tile_action">Дія плитки</string>
+    <string name="tile_action">Швидке налаштування дій плитки</string>
     <string name="title_about">Про застосунок</string>
     <string name="title_apps">Застосунки</string>
     <string name="title_customize">Зовнішній вигляд</string>
@@ -158,5 +154,5 @@
     <string name="follow_system">Як в системі</string>
     <string name="theme_light">Світла</string>
     <string name="theme_dark">Темна</string>
-    <string name="xposed_description">Автоматично розморожувати призупинені застосунки для застосунків з обмеженою областю дії</string>
+    <string name="xposed_description">Дозволити ізольованим застосункам запускати призупинені застосунки</string>
 </resources>
